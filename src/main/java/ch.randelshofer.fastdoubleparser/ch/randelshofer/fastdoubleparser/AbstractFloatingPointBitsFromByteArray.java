@@ -440,11 +440,6 @@ abstract class AbstractFloatingPointBitsFromByteArray extends AbstractFloatValue
         return FastDoubleSwar.tryToParseEightDigitsUtf8(str, offset);
     }
 
-    /*
-    private static long tryToParseEightHexDigits(byte[] str, int offset) {
-        return FastDoubleVector.tryToParseEightHexDigitsUtf8(str, offset);
-    }*/
-
     /**
      * @return a NaN constant in the specialized type wrapped in a {@code long}
      */
