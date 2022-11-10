@@ -23,12 +23,20 @@ jobs:
           architecture: ${{ matrix.arch }}
           distribution: ${{ matrix.dist }}
 
-      - name: Compile FastDoubleParser
-        run: javac -d out -encoding utf8 --module-source-path FastDoubleParser/src/main/java --module ch.randelshofer.fastdoubleparser
+      - name: mkdir
+        run: mkdir -p out
+      - name: Compile JavaDoubleParser
+        run: javac -d out -encoding utf8 -sourcepath FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser/ch/randelshofer/fastdoubleparser/JavaDoubleParser.java
+      - name: Compile JavaFloatParser
+        run: javac -d out -encoding utf8 -sourcepath FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser/ch/randelshofer/fastdoubleparser/JavaFloatParser.java
+      - name: Compile JavaJsonDoubleParser
+        run: javac -d out -encoding utf8 -sourcepath FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser/ch/randelshofer/fastdoubleparser/JsonDoubleParser.java
+      - name: Compile JavaBigDecimalParser
+        run: javac -d out -encoding utf8 -sourcepath FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser FastDoubleParser/src/main/java/ch.randelshofer.fastdoubleparser/ch/randelshofer/fastdoubleparser/JavaBigDecimalParser.java
       - name: Compile FastDoubleParserDemo
-        run: javac -d out -encoding utf8 -p out --module-source-path FastDoubleParserDemo/src/main/java --module ch.randelshofer.fastdoubleparserdemo
+        run: javac -d out -encoding utf8 -cp out -sourcepath FastDoubleParserDemo/src/main/java/ch.randelshofer.fastdoubleparserdemo FastDoubleParserDemo/src/main/java/ch.randelshofer.fastdoubleparserdemo/ch/randelshofer/fastdoubleparserdemo/Main.java
       - name: Run Test 1
-        run: java --module-path out --module ch.randelshofer.fastdoubleparserdemo/ch.randelshofer.fastdoubleparserdemo.Main --print-confidence
+        run: java -cp out ch.randelshofer.fastdoubleparserdemo.Main
       - name: Run Test 2
-        run: java --module-path out --module ch.randelshofer.fastdoubleparserdemo/ch.randelshofer.fastdoubleparserdemo.Main --print-confidence FastDoubleParserDemo/data/canada.txt
+        run: java -cp out ch.randelshofer.fastdoubleparserdemo.Main data/canada.txt
 ...
