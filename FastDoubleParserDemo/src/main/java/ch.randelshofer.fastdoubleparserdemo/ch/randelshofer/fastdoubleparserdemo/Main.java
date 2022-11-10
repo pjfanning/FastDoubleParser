@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -129,7 +130,7 @@ public class Main {
 
 
         Map<String, BenchmarkFunction> functions = new LinkedHashMap<>();
-        List.of(
+        List<BenchmarkFunction> list=java.util.Arrays.asList(
                 new BenchmarkFunction("java.lang.Double", "java.lang.Double", () -> sumJavaLangDouble(lines)),
                 new BenchmarkFunction("java.lang.Float", "java.lang.Float", () -> sumJavaLangFloat(lines)),
                 new BenchmarkFunction("java.math.BigDecimal", "java.math.BigDecimal", () -> sumJavaLangBigDecimal(lines)),
@@ -149,8 +150,10 @@ public class Main {
                 new BenchmarkFunction("JavaBigDecimalParser String", "java.math.BigDecimal", () -> sumFastBigDecimalFromCharSequence(lines)),
                 new BenchmarkFunction("JavaBigDecimalParser char[]", "java.math.BigDecimal", () -> sumFastBigDecimalFromCharArray(charArrayLines)),
                 new BenchmarkFunction("JavaBigDecimalParser byte[]", "java.math.BigDecimal", () -> sumFastBigDecimalFromByteArray(byteArrayLines))
-
-        ).forEach(b -> functions.put(b.title, b));
+        );
+        for (BenchmarkFunction b:list){
+            functions.put(b.title,b);
+        }
 
         return functions;
     }
@@ -497,7 +500,56 @@ public class Main {
         return map;
     }
 
-    record BenchmarkFunction(String title, String reference,
-                             Supplier<? extends Number> supplier) {
+    static final class BenchmarkFunction {
+        private final String title;
+        private final String reference;
+        private final Supplier<? extends Number> supplier;
+
+        BenchmarkFunction(String title, String reference,
+                          Supplier<? extends Number> supplier) {
+            this.title = title;
+            this.reference = reference;
+            this.supplier = supplier;
+        }
+
+        public String title() {
+            return title;
+        }
+
+        public String reference() {
+            return reference;
+        }
+
+        public Supplier<? extends Number> supplier() {
+            return supplier;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (obj == null || obj.getClass() != this.getClass()) {
+                return false;
+            }
+            BenchmarkFunction that = (BenchmarkFunction) obj;
+            return Objects.equals(this.title, that.title) &&
+                    Objects.equals(this.reference, that.reference) &&
+                    Objects.equals(this.supplier, that.supplier);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(title, reference, supplier);
+        }
+
+        @Override
+        public String toString() {
+            return "BenchmarkFunction[" +
+                    "title=" + title + ", " +
+                    "reference=" + reference + ", " +
+                    "supplier=" + supplier + ']';
+        }
+
     }
 }

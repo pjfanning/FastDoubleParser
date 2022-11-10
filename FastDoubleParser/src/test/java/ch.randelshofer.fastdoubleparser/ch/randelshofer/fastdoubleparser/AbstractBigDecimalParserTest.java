@@ -14,7 +14,7 @@ public abstract class AbstractBigDecimalParserTest {
         return Arrays.asList(
                 dynamicTest("0", () -> testParse("0")),
                 dynamicTest("1.0", () -> testParse("1.0")),
-                dynamicTest("19 integer digits", () -> testParse("9".repeat(19))),
+                dynamicTest("19 integer digits", () -> testParse(Strings.repeat("9",19))),
                 dynamicTest("365", () -> testParse("365")),
                 dynamicTest("10.1", () -> testParse("10.1")),
                 dynamicTest("123.45678901234567e123", () -> testParse("123.45678901234567e123")),

@@ -74,7 +74,7 @@ public class JavaBigDecimalFromCharSequenceScalabilityJmh {
 
     @Setup(Level.Trial)
     public void setUp() {
-        str = "9806543217".repeat((digits + 9) / 10).substring(0, digits);
+        str = Strings.repeat("9806543217",(digits + 9) / 10).substring(0, digits);
     }
 
     @Benchmark

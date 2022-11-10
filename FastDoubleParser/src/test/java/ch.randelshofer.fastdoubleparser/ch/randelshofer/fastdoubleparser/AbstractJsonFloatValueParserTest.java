@@ -126,7 +126,7 @@ public abstract class AbstractJsonFloatValueParserTest extends AbstractFloatValu
                 new TestData("parseNumber(): Significand with trailing whitespace", "3   ", 0, 4, 0, 4, 3d, 3f, false),
                 new TestData("parseNumber(): Empty String", "", 0, 0, 0, 0, 0d, 0f, false),
                 new TestData("parseNumber(): Blank String", "   ", 0, 3, 0, 3, 0d, 0f, false),
-                new TestData("parseNumber(): Very long non-blank String", "a".repeat(66), 0, 66, 0, 66, 0d, 0f, false),
+                new TestData("parseNumber(): Very long non-blank String", Strings.repeat("a",66), 0, 66, 0, 66, 0d, 0f, false),
                 new TestData("parseNumber(): Plus Sign", "+", 0, 1, 0, 1, 0d, 0f, false),
                 new TestData("parseNumber(): Negative Sign", "-", 0, 1, 0, 1, 0d, 0f, false),
                 new TestData("parseNumber(): Infinity", "Infinity", 0, 8, 0, 8, Double.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, false),
